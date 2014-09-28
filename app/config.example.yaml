@@ -1,0 +1,16 @@
+servers :
+  -
+    host: example.com
+    port: 22
+    user: username
+    password: password
+  -
+    host: other.example.com
+    port: 22
+    user: otherUsername
+    password: somePassword
+
+index:
+  dsn: mysql:dbname=sftp_index;host=127.0.0.1
+  user: sftp_index
+  password: ~
