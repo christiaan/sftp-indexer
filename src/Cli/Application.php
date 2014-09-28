@@ -29,6 +29,8 @@ final class Application extends \Symfony\Component\Console\Application
     {
         $commands = parent::getDefaultCommands();
 
+        $commands[] = new IndexServerCommand();
+
         return $commands;
     }
 
@@ -68,6 +70,28 @@ final class Application extends \Symfony\Component\Console\Application
         }
 
         return $servers;
+    }
+
+    /**
+     * @param string $name
+     * @throws \InvalidArgumentException on incorrect name
+     * @return SftpServer
+     */
+    public function getServerByName($name)
+    {
+        if (!array_key_exists($name, $this->config['servers'])) {
+            throw new \InvalidArgumentException('Unknown server ' . $name);
+        }
+
+        $server = $this->config['servers'][$name];
+
+        return new SftpServer(
+            $name,
+            $server['host'],
+            $server['port'],
+            $server['user'],
+            $server['password']
+        );
     }
 
     /**

@@ -3,23 +3,13 @@ Sftp Crawler and indexer
 
 Crawling
 --------
+Make sure to run `composer install` to get the dependencies and generate the autoloader files.
 
-    <?php
-    use Christiaan\SftpIndexer\OutputToStreamListener;
+Add servers to the `app/config.yaml` file, copy the config.example.yaml to get started.
 
-    require 'vendor/autoload.php';
+Then run the `servers:index-server` command with the configured *server-name*.
 
-    $crawler = \Christiaan\SftpIndexer\SftpServerCrawler::withPassword(
-        'example.com',
-        2222,
-        'username',
-        'password'
-    );
-
-    $crawler->addListener(new OutputToStreamListener(STDOUT));
-
-
-    $crawler->crawl();
+    php app/console.php servers:index-server <server-name>
 
 
 Dependencies
