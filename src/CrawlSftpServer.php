@@ -2,10 +2,10 @@
 namespace Christiaan\SftpIndexer;
 
 /**
- * CrawlServer
+ * CrawlSftpServer
  * @author Christiaan Baartse <anotherhero@gmail.com>
  */
-final class CrawlServer
+final class CrawlSftpServer
 {
     /** @var CrawlListener[] */
     private $listeners;
@@ -22,7 +22,7 @@ final class CrawlServer
         ssh2_auth_password($session, $username, $password);
 
         $sftp = ssh2_sftp($session);
-        return new CrawlServer($sftp);
+        return new CrawlSftpServer($sftp);
     }
 
     /**
