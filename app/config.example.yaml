@@ -11,6 +11,7 @@ servers :
     password: somePassword
 
 index:
-  dsn: mysql:dbname=sftp_index;host=127.0.0.1
+  host: 127.0.0.1
+  dbname: sftp_index
   user: sftp_index
   password: ~

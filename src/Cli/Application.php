@@ -30,6 +30,7 @@ final class Application extends \Symfony\Component\Console\Application
         $commands = parent::getDefaultCommands();
 
         $commands[] = new IndexServerCommand();
+        $commands[] = new SetupDatabaseCommand();
 
         return $commands;
     }
@@ -39,8 +40,10 @@ final class Application extends \Symfony\Component\Console\Application
      */
     public function getDatabaseConnection()
     {
+        $dsn = "mysql:host={$this->config['index']['host']};port={$this->config['index']['port']}";
+
         $db = new PDO(
-            $this->config['index']['dsn'],
+            $dsn,
             $this->config['index']['user'],
             $this->config['index']['password'],
             [
@@ -48,6 +51,10 @@ final class Application extends \Symfony\Component\Console\Application
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ]
         );
+
+        $dbname = "`".str_replace("`","``",$this->config['index']['dbname'])."`";
+        $db->query("CREATE DATABASE IF NOT EXISTS $dbname");
+        $db->query("use $dbname");
 
         return $db;
     }
