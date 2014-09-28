@@ -9,7 +9,7 @@ Crawling
 
     require 'vendor/autoload.php';
 
-    $crawler = \Christiaan\SftpIndexer\CrawlSftpServer::withPassword(
+    $crawler = \Christiaan\SftpIndexer\SftpServerCrawler::withPassword(
         'example.com',
         2222,
         'username',
