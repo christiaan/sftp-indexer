@@ -33,4 +33,20 @@ final class CrawledItem
     {
         return $this->name;
     }
+
+    /**
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFileMTime()
+    {
+        return $this->fileMTime;
+    }
 }

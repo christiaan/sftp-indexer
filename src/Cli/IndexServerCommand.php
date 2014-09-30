@@ -2,6 +2,7 @@
 namespace Christiaan\SftpIndexer\Cli;
 
 use Christiaan\SftpIndexer\OutputToStreamListener;
+use Christiaan\SftpIndexer\SaveInDbListener;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +34,12 @@ final class IndexServerCommand extends Command
         $crawler = $app->getCrawlerForServer($server);
 
         $crawler->addListener(new OutputToStreamListener(STDOUT));
+
+        $dbListener = new SaveInDbListener(
+            $app->getDatabaseConnection(),
+            $server->getName()
+        );
+        $crawler->addListener($dbListener);
 
         $crawler->crawl();
 
