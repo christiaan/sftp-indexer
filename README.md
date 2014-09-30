@@ -1,7 +1,7 @@
-Sftp Crawler and indexer
-========================
+Sftp server indexer
+===================
 
-Crawling
+Indexing
 --------
 Make sure to run `composer install` to get the dependencies and generate the autoloader files.
 
@@ -20,3 +20,10 @@ This project requires the PHP libssl module
 Install on debian/ubuntu using apt-get
 
     sudo apt-get install libssh2-php
+
+Generate index on server using crontab and find
+-----------------------------------------------
+Instead of having the whole filesystem crawled every time the index is refreshed a sftp server can also provide a `sftp-indexer-index.gz` file in the root of the filesystem.
+When that file is found it is used instead, this greatly reduces load on both ends.
+
+    cd /path/to/sftp/chroot && find . -printf "%P\t%s\t%T@\n" | gzip -c > sftp-indexer-index.gz
