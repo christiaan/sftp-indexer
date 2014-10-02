@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `files`(
 `path` VARCHAR(512) NOT NULL,
 `size` INT UNSIGNED,
 `filemtime` INT UNSIGNED,
+`last_seen` INT UNSIGNED,
 PRIMARY KEY (`server`, `path`)
 );
 SQL;

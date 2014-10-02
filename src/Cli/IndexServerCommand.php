@@ -33,7 +33,9 @@ final class IndexServerCommand extends Command
 
         $crawler = $app->getCrawlerForServer($server);
 
-        $crawler->addListener(new OutputToStreamListener(STDOUT));
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $crawler->addListener(new OutputToStreamListener(STDOUT));
+        }
 
         $dbListener = new SaveInDbListener(
             $app->getDatabaseConnection(),
