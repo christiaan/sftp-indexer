@@ -17,6 +17,10 @@ final class Application extends \Symfony\Component\Console\Application
 
     public function __construct($configFile)
     {
+        set_error_handler(function($errno, $errstr, $errfile, $errline ) {
+            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
+
         parent::__construct(
             'sftp-indexer',
             'dev'

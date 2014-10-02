@@ -42,6 +42,10 @@ final class SftpServerCrawler
         $stack = array('.');
 
         while ($dir = array_shift($stack)) {
+            if ($this->tryReadIndexFile($dir)) {
+                continue;
+            }
+
             try {
                 $iterator = new \NoRewindIterator(new \DirectoryIterator("ssh2.sftp://{$this->sftp}/{$dir}"));
             } catch (\UnexpectedValueException $e) {
@@ -74,8 +78,51 @@ final class SftpServerCrawler
             $entry->getPathname()
         );
 
+        $item = new CrawledItem($name, $entry->getSize(), $entry->getMTime());
         foreach ($this->listeners as $listener) {
-            $listener->onCrawledItem(new CrawledItem($name, $entry->getSize(), $entry->getMTime()));
+            $listener->onCrawledItem($item);
+        }
+    }
+
+    private function tryReadIndexFile($dir)
+    {
+        $error = false;
+        try {
+            $indexFile = @fopen(
+                "ssh2.sftp://{$this->sftp}/{$dir}/sftp-indexer-index.gz",
+                'rb'
+            );
+            $tempFile = tempnam('/tmp', 'sftp-indexer');
+            $tempStream = @fopen($tempFile, 'w');
+
+            stream_copy_to_stream($indexFile, $tempStream);
+        } catch (\ErrorException $e) {
+            $error = true;
+        }
+
+        if (!empty($indexFile)) fclose($indexFile);
+        if (!empty($tempStream)) fclose($tempStream);
+        if ($error) {
+            @unlink($tempFile);
+            return false;
+        }
+
+        foreach (new \SplFileObject('compress.zlib://'.$tempFile, 'r') as $line) {
+            $this->indexCacheLine($line);
+        }
+
+        @unlink($tempFile);
+        return true;
+    }
+
+    private function indexCacheLine($line)
+    {
+        $line = explode("\t", $line, 4);
+        if (count($line) === 4 && $line[0] === 'f') {
+            $item = new CrawledItem($line[1], $line[2], $line[3]);
+            foreach ($this->listeners as $listener) {
+                $listener->onCrawledItem($item);
+            }
         }
     }
 }
