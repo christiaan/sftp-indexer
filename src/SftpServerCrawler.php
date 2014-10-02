@@ -103,7 +103,7 @@ final class SftpServerCrawler
         if (!empty($indexFile)) fclose($indexFile);
         if (!empty($tempStream)) fclose($tempStream);
         if ($error) {
-            @unlink($tempFile);
+            if (isset($tempFile)) unlink($tempFile);
             return false;
         }
 
@@ -111,7 +111,7 @@ final class SftpServerCrawler
             $this->indexCacheLine($line);
         }
 
-        @unlink($tempFile);
+        unlink($tempFile);
         return true;
     }
 
