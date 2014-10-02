@@ -30,7 +30,7 @@ final class SetupDatabaseCommand extends Command
 CREATE TABLE IF NOT EXISTS `files`(
 `server` VARCHAR(255) NOT NULL,
 `path` VARCHAR(512) NOT NULL,
-`size` INT UNSIGNED,
+`size` BIGINT UNSIGNED,
 `filemtime` INT UNSIGNED,
 `last_seen` INT UNSIGNED,
 PRIMARY KEY (`server`, `path`)
