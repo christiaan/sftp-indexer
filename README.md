@@ -26,4 +26,4 @@ Generate index on server using crontab and find
 Instead of having the whole filesystem crawled every time the index is refreshed a sftp server can also provide a `sftp-indexer-index.gz` file in the root of the filesystem.
 When that file is found it is used instead, this greatly reduces load on both ends.
 
-    cd /path/to/sftp/chroot && find . -printf "%P\t%s\t%T@\n" | gzip -c > sftp-indexer-index.gz
+    cd /path/to/sftp/chroot && find . -printf "%P\t%s\t%T@\n" | gzip -c > sftp-indexer-index-indexing.gz && mv sftp-indexer-index-indexing.gz sftp-indexer-index.gz
