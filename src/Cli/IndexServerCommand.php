@@ -1,8 +1,8 @@
 <?php
 namespace Christiaan\SftpIndexer\Cli;
 
-use Christiaan\SftpIndexer\OutputToStreamListener;
-use Christiaan\SftpIndexer\SaveInDbListener;
+use Christiaan\SftpIndexer\Infrastructure\OutputToStreamListener;
+use Christiaan\SftpIndexer\Infrastructure\SaveInDbListener;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

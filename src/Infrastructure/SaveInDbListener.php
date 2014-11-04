@@ -1,5 +1,8 @@
 <?php
-namespace Christiaan\SftpIndexer;
+namespace Christiaan\SftpIndexer\Infrastructure;
+
+use Christiaan\SftpIndexer\Crawler\CrawledItem;
+use Christiaan\SftpIndexer\Crawler\CrawlListener;
 
 /**
  * SaveInDbListener

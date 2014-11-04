@@ -2,7 +2,7 @@
 namespace Christiaan\SftpIndexer\Cli;
 
 use Christiaan\SftpIndexer\SftpServer;
-use Christiaan\SftpIndexer\SftpServerCrawler;
+use Christiaan\SftpIndexer\Crawler\SftpServerCrawler;
 use PDO;
 use Symfony\Component\Yaml\Yaml;
 
@@ -107,7 +107,7 @@ final class Application extends \Symfony\Component\Console\Application
 
     /**
      * @param SftpServer $server
-     * @return SftpServerCrawler
+     * @return \Christiaan\SftpIndexer\Crawler\SftpServerCrawler
      */
     public function getCrawlerForServer(SftpServer $server)
     {

@@ -1,5 +1,5 @@
 <?php
-namespace Christiaan\SftpIndexer;
+namespace Christiaan\SftpIndexer\Crawler;
 
 /**
  * SftpServerCrawler
